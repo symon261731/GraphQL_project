@@ -1,24 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useQuery } from '@apollo/client';
+import { GET_DATA } from './graphql/GET_DATA';
 
 function App() {
+  const {data, error, loading} = useQuery(GET_DATA);
+
   return (
+    
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {data?.locations.map((element: any)=>{
+        return (
+          <div key={element.id}>
+            <h3>{element.name}</h3>
+            <img width={400} height={200} src={element.photo} alt="123" />
+            <br />
+            <p>desciption:</p>
+            <p>{element.description}</p>
+          </div>
+        )
+      })}
     </div>
   );
 }
